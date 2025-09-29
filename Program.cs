@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VisualBook
@@ -13,12 +10,7 @@ namespace VisualBook
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            var startForm = new StartForm();
-            if (startForm.ShowDialog() == DialogResult.OK)
-            {
-                Application.Run(new EnhancedMainForm());
-            }
+            Application.Run(new StartForm());
         }
     }
 }

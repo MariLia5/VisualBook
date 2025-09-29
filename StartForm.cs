@@ -1,12 +1,17 @@
 ﻿using System;
-using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace VisualBook
 {
-    public class StartForm : Form
+    public partial class StartForm : Form
     {
+        private Button btnStart;
+        private Button btnExit;
+        private Label label1;
+        private PictureBox pictureBox1;
+
         public StartForm()
         {
             InitializeComponent();
@@ -14,64 +19,126 @@ namespace VisualBook
 
         private void InitializeComponent()
         {
-            this.Size = new Size(300, 200);
-            this.Text = "Детектив Майк Джонс";
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.btnStart = new Button();
+            this.btnExit = new Button();
+            this.label1 = new Label();
+            this.pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)this.pictureBox1).BeginInit();
+            this.SuspendLayout();
 
-            var label = new Label()
-            {
-                Text = "Добро пожаловать в игру!\nВыберите действие:",
-                Location = new Point(20, 20),
-                Size = new Size(250, 40),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
+            // label1
+            this.label1.AutoSize = true;
+            this.label1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold);
+            this.label1.ForeColor = Color.White;
+            this.label1.Location = new Point(40, 120);
+            this.label1.Name = "label1";
+            this.label1.Size = new Size(260, 29);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Детектив Майк Джонс";
+            this.label1.TextAlign = ContentAlignment.MiddleCenter;
 
-            var btnNewGame = new Button()
-            {
-                Text = "Новая игра",
-                Location = new Point(50, 80),
-                Size = new Size(200, 30)
-            };
+            // btnStart
+            this.btnStart.BackColor = Color.SteelBlue;
+            this.btnStart.FlatStyle = FlatStyle.Flat;
+            this.btnStart.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
+            this.btnStart.ForeColor = Color.White;
+            this.btnStart.Location = new Point(70, 170);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new Size(200, 40);
+            this.btnStart.TabIndex = 1;
+            this.btnStart.Text = "Начать игру";
+            this.btnStart.UseVisualStyleBackColor = false;
+            this.btnStart.Click += new EventHandler(this.btnStart_Click);
 
-            var btnLoadGame = new Button()
-            {
-                Text = "Загрузить игру",
-                Location = new Point(50, 120),
-                Size = new Size(200, 30)
-            };
+            // btnExit
+            this.btnExit.BackColor = Color.FromArgb(64, 64, 64);
+            this.btnExit.FlatStyle = FlatStyle.Flat;
+            this.btnExit.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
+            this.btnExit.ForeColor = Color.White;
+            this.btnExit.Location = new Point(70, 220);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new Size(200, 40);
+            this.btnExit.TabIndex = 2;
+            this.btnExit.Text = "Выход";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new EventHandler(this.btnExit_Click);
 
-            btnNewGame.Click += (s, e) =>
-            {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            };
+            // pictureBox1
+            this.pictureBox1.Location = new Point(70, 20);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new Size(200, 80);
+            this.pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
 
-            btnLoadGame.Click += (s, e) =>
+            // Загружаем Start.jpg
+            try
             {
-                var db = new Database();
-                using (var connection = db.GetConnection())
+                string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                string imagePath = Path.Combine(basePath, "images", "Start.jpg");
+
+                if (File.Exists(imagePath))
                 {
-                    connection.Open();
-                    var command = new SQLiteCommand("SELECT COUNT(*) FROM SaveGames", connection);
-                    var count = Convert.ToInt32(command.ExecuteScalar());
-
-                    if (count > 0)
-                    {
-                        this.DialogResult = DialogResult.OK;
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Нет сохраненных игр!", "Загрузка",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    this.pictureBox1.Image = Image.FromFile(imagePath);
                 }
-            };
+                else
+                {
+                    CreatePlaceholderImage("Start.jpg не найден");
+                }
+            }
+            catch (Exception ex)
+            {
+                CreatePlaceholderImage($"Ошибка: {ex.Message}");
+            }
 
-            this.Controls.AddRange(new Control[] { label, btnNewGame, btnLoadGame });
+            // StartForm
+            this.AutoScaleDimensions = new SizeF(6F, 13F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.FromArgb(15, 15, 15);
+            this.ClientSize = new Size(350, 280);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnExit);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.label1);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "StartForm";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Детектив Майк Джонс";
+            ((System.ComponentModel.ISupportInitialize)this.pictureBox1).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        private void CreatePlaceholderImage(string text)
+        {
+            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.FromArgb(30, 30, 30));
+                using (Font font = new Font("Arial", 10))
+                using (StringFormat sf = new StringFormat())
+                {
+                    sf.Alignment = StringAlignment.Center;
+                    sf.LineAlignment = StringAlignment.Center;
+                    g.DrawString(text, font, Brushes.White,
+                                new RectangleF(0, 0, bmp.Width, bmp.Height), sf);
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            Form1 gameForm = new Form1();
+            this.Hide();
+            gameForm.ShowDialog();
+            this.Close();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

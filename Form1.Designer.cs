@@ -1,16 +1,17 @@
-﻿namespace VisualBook
+﻿using System.Drawing;
+using System.Windows.Forms;
+using System;
+
+namespace VisualBook
 {
     partial class Form1
     {
-        /// <summary>
-        /// Обязательная переменная конструктора.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private TextBox tbNovella;
+        private PictureBox pbNovella;
+        private Button btnNext;
+        private Button btnStatistics;
 
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,118 +21,87 @@
             base.Dispose(disposing);
         }
 
-        #region Код, автоматически созданный конструктором форм Windows
-
-        /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.pbImage = new System.Windows.Forms.PictureBox();
             this.tbNovella = new System.Windows.Forms.TextBox();
-            this.btnStatistics = new System.Windows.Forms.Button();
+            this.pbNovella = new System.Windows.Forms.PictureBox();
             this.btnNext = new System.Windows.Forms.Button();
-            this.bntChoice1 = new System.Windows.Forms.Button();
-            this.bntChoice2 = new System.Windows.Forms.Button();
-            this.bntChoice3 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
+            this.btnStatistics = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pbNovella)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pbImage
-            // 
-            this.pbImage.Location = new System.Drawing.Point(462, 21);
-            this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(374, 457);
-            this.pbImage.TabIndex = 0;
-            this.pbImage.TabStop = false;
             // 
             // tbNovella
             // 
-            this.tbNovella.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.tbNovella.Location = new System.Drawing.Point(123, 21);
+            this.tbNovella.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.tbNovella.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbNovella.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbNovella.ForeColor = System.Drawing.Color.White;
+            this.tbNovella.Location = new System.Drawing.Point(151, 20);
             this.tbNovella.Multiline = true;
             this.tbNovella.Name = "tbNovella";
-            this.tbNovella.Size = new System.Drawing.Size(342, 457);
-            this.tbNovella.TabIndex = 1;
+            this.tbNovella.ReadOnly = true;
+            this.tbNovella.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbNovella.Size = new System.Drawing.Size(400, 450);
+            this.tbNovella.TabIndex = 0;
             this.tbNovella.TextChanged += new System.EventHandler(this.tbNovella_TextChanged);
             // 
-            // btnStatistics
+            // pbNovella
             // 
-            this.btnStatistics.Location = new System.Drawing.Point(12, 377);
-            this.btnStatistics.Name = "btnStatistics";
-            this.btnStatistics.Size = new System.Drawing.Size(91, 34);
-            this.btnStatistics.TabIndex = 2;
-            this.btnStatistics.Text = "Статистика";
-            this.btnStatistics.UseVisualStyleBackColor = true;
-            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
+            this.pbNovella.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.pbNovella.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbNovella.Location = new System.Drawing.Point(586, 20);
+            this.pbNovella.Name = "pbNovella";
+            this.pbNovella.Size = new System.Drawing.Size(400, 450);
+            this.pbNovella.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbNovella.TabIndex = 1;
+            this.pbNovella.TabStop = false;
+            this.pbNovella.Click += new System.EventHandler(this.pbNovella_Click);
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(12, 444);
+            this.btnNext.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnNext.ForeColor = System.Drawing.Color.White;
+            this.btnNext.Location = new System.Drawing.Point(12, 430);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(91, 34);
-            this.btnNext.TabIndex = 3;
-            this.btnNext.Text = "Читать далее";
-            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Size = new System.Drawing.Size(120, 40);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = "Далее";
+            this.btnNext.UseVisualStyleBackColor = false;
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
-            // bntChoice1
+            // btnStatistics
             // 
-            this.bntChoice1.Location = new System.Drawing.Point(123, 484);
-            this.bntChoice1.Name = "bntChoice1";
-            this.bntChoice1.Size = new System.Drawing.Size(91, 34);
-            this.bntChoice1.TabIndex = 4;
-            this.bntChoice1.Text = "Выбрать 1";
-            this.bntChoice1.UseVisualStyleBackColor = true;
-            // 
-            // bntChoice2
-            // 
-            this.bntChoice2.Location = new System.Drawing.Point(123, 524);
-            this.bntChoice2.Name = "bntChoice2";
-            this.bntChoice2.Size = new System.Drawing.Size(91, 34);
-            this.bntChoice2.TabIndex = 5;
-            this.bntChoice2.Text = "Выбрать 2";
-            this.bntChoice2.UseVisualStyleBackColor = true;
-            // 
-            // bntChoice3
-            // 
-            this.bntChoice3.Location = new System.Drawing.Point(123, 564);
-            this.bntChoice3.Name = "bntChoice3";
-            this.bntChoice3.Size = new System.Drawing.Size(91, 34);
-            this.bntChoice3.TabIndex = 6;
-            this.bntChoice3.Text = "Выбрать 2";
-            this.bntChoice3.UseVisualStyleBackColor = true;
+            this.btnStatistics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnStatistics.ForeColor = System.Drawing.Color.White;
+            this.btnStatistics.Location = new System.Drawing.Point(12, 373);
+            this.btnStatistics.Name = "btnStatistics";
+            this.btnStatistics.Size = new System.Drawing.Size(120, 40);
+            this.btnStatistics.TabIndex = 3;
+            this.btnStatistics.Text = "Статистика";
+            this.btnStatistics.UseVisualStyleBackColor = false;
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(990, 655);
-            this.Controls.Add(this.bntChoice3);
-            this.Controls.Add(this.bntChoice2);
-            this.Controls.Add(this.bntChoice1);
-            this.Controls.Add(this.btnNext);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.ClientSize = new System.Drawing.Size(1266, 595);
             this.Controls.Add(this.btnStatistics);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.pbNovella);
             this.Controls.Add(this.tbNovella);
-            this.Controls.Add(this.pbImage);
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
+            this.Text = "Детектив Майк Джонс: Охота на белого орла";
+            ((System.ComponentModel.ISupportInitialize)(this.pbNovella)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-
-        #endregion
-
-        private System.Windows.Forms.PictureBox pbImage;
-        private System.Windows.Forms.TextBox tbNovella;
-        private System.Windows.Forms.Button btnStatistics;
-        private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.Button bntChoice1;
-        private System.Windows.Forms.Button bntChoice2;
-        private System.Windows.Forms.Button bntChoice3;
     }
 }
-
