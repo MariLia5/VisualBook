@@ -36,12 +36,12 @@ namespace VisualBook
             this.tbNovella.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbNovella.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbNovella.ForeColor = System.Drawing.Color.White;
-            this.tbNovella.Location = new System.Drawing.Point(151, 20);
+            this.tbNovella.Location = new System.Drawing.Point(155, 14);
             this.tbNovella.Multiline = true;
             this.tbNovella.Name = "tbNovella";
             this.tbNovella.ReadOnly = true;
             this.tbNovella.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbNovella.Size = new System.Drawing.Size(400, 450);
+            this.tbNovella.Size = new System.Drawing.Size(636, 438);
             this.tbNovella.TabIndex = 0;
             this.tbNovella.TextChanged += new System.EventHandler(this.tbNovella_TextChanged);
             // 
@@ -49,10 +49,10 @@ namespace VisualBook
             // 
             this.pbNovella.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.pbNovella.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbNovella.Location = new System.Drawing.Point(586, 20);
+            this.pbNovella.Location = new System.Drawing.Point(852, 12);
             this.pbNovella.Name = "pbNovella";
             this.pbNovella.Size = new System.Drawing.Size(400, 450);
-            this.pbNovella.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbNovella.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbNovella.TabIndex = 1;
             this.pbNovella.TabStop = false;
             this.pbNovella.Click += new System.EventHandler(this.pbNovella_Click);
@@ -63,7 +63,7 @@ namespace VisualBook
             this.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnNext.ForeColor = System.Drawing.Color.White;
-            this.btnNext.Location = new System.Drawing.Point(12, 430);
+            this.btnNext.Location = new System.Drawing.Point(12, 422);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(120, 40);
             this.btnNext.TabIndex = 2;
@@ -77,7 +77,7 @@ namespace VisualBook
             this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnStatistics.ForeColor = System.Drawing.Color.White;
-            this.btnStatistics.Location = new System.Drawing.Point(12, 373);
+            this.btnStatistics.Location = new System.Drawing.Point(12, 6);
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(120, 40);
             this.btnStatistics.TabIndex = 3;
@@ -90,7 +90,7 @@ namespace VisualBook
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.ClientSize = new System.Drawing.Size(1266, 595);
+            this.ClientSize = new System.Drawing.Size(1360, 642);
             this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.pbNovella);
