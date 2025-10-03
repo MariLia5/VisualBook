@@ -1,5 +1,4 @@
-﻿// Form1.cs
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -15,15 +14,36 @@ namespace VisualBook
 
         public Form1()
         {
-            InitializeComponent();
+            this.MinimumSize = new Size(850, 650);
             this.Size = new Size(850, 650);
             this.StartPosition = FormStartPosition.CenterScreen;
+
+            InitializeComponent();
+
+            pbNovella.BackColor = Color.FromArgb(30, 30, 30);
+
             InitializeGame();
         }
 
         private void InitializeGame()
         {
-            game = new Game();
+            var savedGame = Game.Load();
+            if (savedGame != null)
+            {
+                var result = MessageBox.Show(
+                    "Найдена сохранённая игра.\nХотите продолжить?",
+                    "Продолжить игру",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                game = result == DialogResult.Yes ? savedGame : new Game();
+            }
+            else
+            {
+                game = new Game();
+            }
+
             InitializeChoicePanel();
             LoadScene(game.CurrentScene);
         }
@@ -32,7 +52,7 @@ namespace VisualBook
         {
             choicePanel = new Panel()
             {
-                BackColor = this.BackColor, // ← совпадает с фоном формы → убирает "прямоугольник"
+                BackColor = this.BackColor,
                 Size = new Size(800, 120),
                 Location = new Point(20, 480),
                 Visible = false,
@@ -158,12 +178,13 @@ namespace VisualBook
             choicePanel.Height = Math.Max(120, totalHeight);
         }
 
+        // === Методы выборов ===
         private void ShowForest1Choices()
         {
             var choices = new List<string>
             {
-                "1. Майк Джонс наклонился чтобы поднять украшение.\n«Хелен, говорила об эзотерических украшениях. Полагаю это украшение Паулы»",
-                "2. Майк Джонс прошел мимо, решив не тратить время.\n«Давай Майк, не теряй время»"
+                "Майк Джонс наклонился чтобы поднять украшение.\n«Хелен, говорила об эзотерических украшениях. Полагаю это украшение Паулы»",
+                "Майк Джонс прошел мимо, решив не тратить время.\n«Давай Майк, не теряй время»"
             };
 
             var actions = new List<Action>
@@ -186,9 +207,9 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Посмотреть на деревья у костра.",
-                "2. Посмотреть на разбросанные предметы у костра.",
-                "3. Не терять время."
+                "Посмотреть на деревья у костра.",
+                "Посмотреть на разбросанные предметы у костра.",
+                "Не терять время."
             };
 
             var actions = new List<Action>
@@ -215,8 +236,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1.1 Взять кровь на проверку.",
-                "1.2 Не брать кровь на проверку."
+                "Взять кровь на проверку.",
+                "Не брать кровь на проверку."
             };
 
             var actions = new List<Action>
@@ -239,8 +260,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "2.1 Взять кость на проверку.",
-                "2.2 Не брать кость на проверку."
+                "Взять кость на проверку.",
+                "Не брать кость на проверку."
             };
 
             var actions = new List<Action>
@@ -263,8 +284,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Спрятать блистер в карман.",
-                "2. Выбросить блистер."
+                "Спрятать блистер в карман.",
+                "Выбросить блистер."
             };
 
             var actions = new List<Action>
@@ -287,8 +308,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Открыть смс.",
-                "2. Отключить звук на телефоне."
+                "Открыть смс.",
+                "Отключить звук на телефоне."
             };
 
             var actions = new List<Action>
@@ -311,8 +332,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Уклониться.",
-                "2. Замахнуться кулаком в ответ."
+                "Уклониться.",
+                "Замахнуться кулаком в ответ."
             };
 
             var actions = new List<Action>
@@ -335,8 +356,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Отскочить назад.",
-                "2. Схватиться за палку сектанта."
+                "Отскочить назад.",
+                "Схватиться за палку сектанта."
             };
 
             var actions = new List<Action>
@@ -359,8 +380,8 @@ namespace VisualBook
         {
             var choices = new List<string>
             {
-                "1. Накинуться и бить.",
-                "2. Отдышаться и ждать."
+                "Накинуться и бить.",
+                "Отдышаться и ждать."
             };
 
             var actions = new List<Action>
@@ -453,12 +474,13 @@ namespace VisualBook
             ShowStatisticsDialog();
         }
 
+        // Статистика
         private void ShowStatisticsDialog()
         {
             Form statsForm = new Form()
             {
                 Text = "СТАТИСТИКА",
-                Size = new Size(350, 280),
+                Size = new Size(350, 300),
                 StartPosition = FormStartPosition.CenterParent,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
@@ -506,6 +528,31 @@ namespace VisualBook
             statsForm.Controls.Add(statsTextBox);
             statsForm.Controls.Add(okButton);
             statsForm.ShowDialog();
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e)
+        {
+            AskToSaveAndExit();
+        }
+
+        private void AskToSaveAndExit()
+        {
+            var result = MessageBox.Show(
+                "Сохранить текущую игру перед выходом?",
+                "Выход из игры",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                game.Save();
+                Application.Exit();
+            }
+            else if (result == DialogResult.No)
+            {
+                Application.Exit();
+            }
         }
 
         private void tbNovella_TextChanged(object sender, EventArgs e) { }

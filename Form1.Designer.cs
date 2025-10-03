@@ -27,6 +27,7 @@ namespace VisualBook
             this.pbNovella = new System.Windows.Forms.PictureBox();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnStatistics = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbNovella)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,7 +42,7 @@ namespace VisualBook
             this.tbNovella.Name = "tbNovella";
             this.tbNovella.ReadOnly = true;
             this.tbNovella.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbNovella.Size = new System.Drawing.Size(636, 438);
+            this.tbNovella.Size = new System.Drawing.Size(626, 448);
             this.tbNovella.TabIndex = 0;
             this.tbNovella.TextChanged += new System.EventHandler(this.tbNovella_TextChanged);
             // 
@@ -49,10 +50,10 @@ namespace VisualBook
             // 
             this.pbNovella.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.pbNovella.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pbNovella.Location = new System.Drawing.Point(852, 12);
+            this.pbNovella.Location = new System.Drawing.Point(814, 14);
             this.pbNovella.Name = "pbNovella";
-            this.pbNovella.Size = new System.Drawing.Size(400, 450);
-            this.pbNovella.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbNovella.Size = new System.Drawing.Size(463, 448);
+            this.pbNovella.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbNovella.TabIndex = 1;
             this.pbNovella.TabStop = false;
             this.pbNovella.Click += new System.EventHandler(this.pbNovella_Click);
@@ -77,7 +78,7 @@ namespace VisualBook
             this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnStatistics.ForeColor = System.Drawing.Color.White;
-            this.btnStatistics.Location = new System.Drawing.Point(12, 6);
+            this.btnStatistics.Location = new System.Drawing.Point(12, 358);
             this.btnStatistics.Name = "btnStatistics";
             this.btnStatistics.Size = new System.Drawing.Size(120, 40);
             this.btnStatistics.TabIndex = 3;
@@ -85,12 +86,27 @@ namespace VisualBook
             this.btnStatistics.UseVisualStyleBackColor = false;
             this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.btnExit.ForeColor = System.Drawing.Color.White;
+            this.btnExit.Location = new System.Drawing.Point(12, 24);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(120, 40);
+            this.btnExit.TabIndex = 4;
+            this.btnExit.Text = "Закрыть";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.ClientSize = new System.Drawing.Size(1360, 642);
+            this.ClientSize = new System.Drawing.Size(1325, 647);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnStatistics);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.pbNovella);
@@ -103,5 +119,7 @@ namespace VisualBook
             this.PerformLayout();
 
         }
+
+        private Button btnExit;
     }
 }
