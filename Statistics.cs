@@ -1,20 +1,21 @@
 ﻿using System;
-
 [Serializable]
+
+// Статистика игрока
 public class Statistics
 {
+    // Статы
     private int _observation;
     private int _health;
+
+    // Скрытые статы
     private int _blood;
     private int _bone;
     private int _blister;
     private int _sms;
     private int _decoration;
 
-    public Statistics()
-    {
-        Reset();
-    }
+    public Statistics()  { Reset(); }
 
     public int Observation => _observation;
     public int Health => _health;
@@ -44,6 +45,7 @@ public class Statistics
         _decoration = 0;
     }
 
+    // Отображение стат
     public string GetDisplayText()
     {
         return "БАЗОВЫЕ ХАРАКТЕРИСТИКИ:\r\n" +

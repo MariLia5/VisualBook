@@ -25,9 +25,11 @@ namespace VisualBook
             InitializeGame();
         }
 
+        // Запуск
         private void InitializeGame()
         {
             var savedGame = Game.Load();
+
             if (savedGame != null)
             {
                 var result = MessageBox.Show(
@@ -37,7 +39,21 @@ namespace VisualBook
                     MessageBoxIcon.Question
                 );
 
-                game = result == DialogResult.Yes ? savedGame : new Game();
+                if (result == DialogResult.Yes)
+                {
+                    game = savedGame;
+                }
+                else
+                {
+                    game = new Game();
+                    // Удаление сохранения
+                    try
+                    {
+                        if (File.Exists(Game.SaveFilePath))
+                            File.Delete(Game.SaveFilePath);
+                    }
+                    catch { }
+                }
             }
             else
             {
@@ -48,6 +64,7 @@ namespace VisualBook
             LoadScene(game.CurrentScene);
         }
 
+        // Панель выборов
         private void InitializeChoicePanel()
         {
             choicePanel = new Panel()
@@ -70,6 +87,7 @@ namespace VisualBook
             ShowChoicesForScene(sceneFile);
         }
 
+        // Реализация выборов
         private void ShowChoicesForScene(string sceneFile)
         {
             HideChoicePanel();
@@ -107,14 +125,13 @@ namespace VisualBook
                 case "LowHP.txt":
                 case "AllEvidence.txt":
                 case "NOEvidence.txt":
-                    btnNext.Enabled = true;
-                    break;
                 case "HighHP.txt":
                     btnNext.Enabled = true;
                     break;
             }
         }
 
+        // Кнопки выборов
         private void CreateChoiceButtons(List<string> choices, List<Action> actions)
         {
             foreach (var button in choiceButtons)
@@ -178,7 +195,7 @@ namespace VisualBook
             choicePanel.Height = Math.Max(120, totalHeight);
         }
 
-        // === Методы выборов ===
+        // Методы выборов
         private void ShowForest1Choices()
         {
             var choices = new List<string>
@@ -400,6 +417,7 @@ namespace VisualBook
             ShowChoicePanel();
         }
 
+        // Визуал
         private void ShowChoicePanel()
         {
             choicePanel.Visible = true;
@@ -460,6 +478,7 @@ namespace VisualBook
             pbNovella.Image = bmp;
         }
 
+        // Далее
         private void btnNext_Click(object sender, EventArgs e)
         {
             string nextScene = game.AdvanceToNextScene();
@@ -469,12 +488,12 @@ namespace VisualBook
             }
         }
 
+        // Статистика
         private void btnStatistics_Click(object sender, EventArgs e)
         {
             ShowStatisticsDialog();
         }
 
-        // Статистика
         private void ShowStatisticsDialog()
         {
             Form statsForm = new Form()
@@ -535,6 +554,7 @@ namespace VisualBook
             AskToSaveAndExit();
         }
 
+        // Сохранение
         private void AskToSaveAndExit()
         {
             var result = MessageBox.Show(
@@ -551,6 +571,12 @@ namespace VisualBook
             }
             else if (result == DialogResult.No)
             {
+                try
+                {
+                    if (File.Exists(Game.SaveFilePath))
+                        File.Delete(Game.SaveFilePath);
+                }
+                catch { }
                 Application.Exit();
             }
         }

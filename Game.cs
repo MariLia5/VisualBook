@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-
 [Serializable]
+
 public class Game
 {
     public Statistics Stats { get; private set; }
     public string CurrentScene { get; private set; }
+
+    // Путь для сохранения текущей игры
+    public static string SaveFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegame.dat");
 
     public Game()
     {
@@ -135,7 +138,7 @@ public class Game
         CurrentScene = "Fight3.2.txt";
     }
 
-    //Логика переходов
+    // Логика переходов
     private string GetNextSceneName()
     {
         var endingScenes = new HashSet<string>
@@ -150,6 +153,7 @@ public class Game
             return "End.txt";
         }
 
+        // Выборы с переходом на дальнейшие сцены
         switch (CurrentScene)
         {
             case "Start.txt": return "Cabinet.txt";
@@ -197,6 +201,7 @@ public class Game
         }
     }
 
+    // Счетчики скрытых стат
     public string AdvanceToNextScene()
     {
         string next = GetNextSceneName();
@@ -222,20 +227,21 @@ public class Game
         }
     }
 
-    //Сохранение/загрузка
-    private static string SaveFilePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegame.dat");
-
+    // Сохранение/загрузка
     public void Save()
     {
         try
         {
-            var stream = File.Create(SaveFilePath);
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(stream, this);
+            using (var stream = File.Create(SaveFilePath))
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(stream, this);
+            }
         }
-        catch (Exception ex) { }
+        catch (Exception) { }
     }
 
+    // Загрузка игры
     public static Game Load()
     {
         if (!File.Exists(SaveFilePath))
@@ -243,19 +249,20 @@ public class Game
 
         try
         {
-            var stream = File.OpenRead(SaveFilePath);
-            var formatter = new BinaryFormatter();
-            return (Game)formatter.Deserialize(stream);
+            using (var stream = File.OpenRead(SaveFilePath))
+            {
+                var formatter = new BinaryFormatter();
+                return (Game)formatter.Deserialize(stream);
+            }
         }
         catch
         {
-            // Повреждённый файл — удаляем
             try { File.Delete(SaveFilePath); } catch { }
             return null;
         }
     }
 
-    // Методы
+    // Методы чтения из файла
     public string LoadSceneText(string sceneFile)
     {
         string scenePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "scene");
@@ -278,6 +285,7 @@ public class Game
         }
     }
 
+    // Изображения
     public string GetImageFileName(string sceneFile)
     {
         return Path.GetFileNameWithoutExtension(sceneFile) + ".jpg";
