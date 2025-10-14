@@ -9,23 +9,16 @@ namespace VisualBook
     public partial class Form1 : Form
     {
         private Game game;
-        private Panel choicePanel;
         private List<Button> choiceButtons;
+        private MusicPlayer musicPlayer;
 
-        public Form1()
+        public Form1(MusicPlayer musicPlayer)
         {
-            this.MinimumSize = new Size(850, 650);
-            this.Size = new Size(850, 650);
-            this.StartPosition = FormStartPosition.CenterScreen;
-
+            this.musicPlayer = musicPlayer;
             InitializeComponent();
-
-            pbNovella.BackColor = Color.FromArgb(30, 30, 30);
-
             InitializeGame();
         }
-
-        // Запуск
+        // Сохранение игры
         private void InitializeGame()
         {
             var savedGame = Game.Load();
@@ -46,7 +39,6 @@ namespace VisualBook
                 else
                 {
                     game = new Game();
-                    // Удаление сохранения
                     try
                     {
                         if (File.Exists(Game.SaveFilePath))
@@ -60,26 +52,11 @@ namespace VisualBook
                 game = new Game();
             }
 
-            InitializeChoicePanel();
+            choiceButtons = new List<Button>();
             LoadScene(game.CurrentScene);
         }
 
-        // Панель выборов
-        private void InitializeChoicePanel()
-        {
-            choicePanel = new Panel()
-            {
-                BackColor = this.BackColor,
-                Size = new Size(800, 120),
-                Location = new Point(20, 480),
-                Visible = false,
-                BorderStyle = BorderStyle.None
-            };
-
-            choiceButtons = new List<Button>();
-            this.Controls.Add(choicePanel);
-        }
-
+        // Выборы
         private void LoadScene(string sceneFile)
         {
             tbNovella.Text = game.LoadSceneText(sceneFile);
@@ -87,7 +64,6 @@ namespace VisualBook
             ShowChoicesForScene(sceneFile);
         }
 
-        // Реализация выборов
         private void ShowChoicesForScene(string sceneFile)
         {
             HideChoicePanel();
@@ -130,7 +106,6 @@ namespace VisualBook
                     break;
             }
         }
-
         // Кнопки выборов
         private void CreateChoiceButtons(List<string> choices, List<Action> actions)
         {
@@ -195,7 +170,6 @@ namespace VisualBook
             choicePanel.Height = Math.Max(120, totalHeight);
         }
 
-        // Методы выборов
         private void ShowForest1Choices()
         {
             var choices = new List<string>
@@ -416,8 +390,7 @@ namespace VisualBook
             CreateChoiceButtons(choices, actions);
             ShowChoicePanel();
         }
-
-        // Визуал
+        // Панель выборов
         private void ShowChoicePanel()
         {
             choicePanel.Visible = true;
@@ -429,7 +402,7 @@ namespace VisualBook
             choicePanel.Visible = false;
             btnNext.Enabled = true;
         }
-
+        // Изображения
         private void LoadImage(string sceneFile)
         {
             if (pbNovella.Image != null)
@@ -477,8 +450,7 @@ namespace VisualBook
             }
             pbNovella.Image = bmp;
         }
-
-        // Далее
+        // Кнопка Далее
         private void btnNext_Click(object sender, EventArgs e)
         {
             string nextScene = game.AdvanceToNextScene();
@@ -488,18 +460,17 @@ namespace VisualBook
             }
         }
 
-        // Статистика
         private void btnStatistics_Click(object sender, EventArgs e)
         {
             ShowStatisticsDialog();
         }
-
+        // Статистика
         private void ShowStatisticsDialog()
         {
             Form statsForm = new Form()
             {
                 Text = "СТАТИСТИКА",
-                Size = new Size(350, 300),
+                Size = new Size(400, 350),
                 StartPosition = FormStartPosition.CenterParent,
                 FormBorderStyle = FormBorderStyle.FixedDialog,
                 MaximizeBox = false,
@@ -525,9 +496,33 @@ namespace VisualBook
                 BackColor = Color.FromArgb(15, 15, 15),
                 BorderStyle = BorderStyle.None,
                 Location = new Point(20, 60),
-                Size = new Size(300, 150),
+                Size = new Size(350, 150),
                 Multiline = true,
                 ReadOnly = true
+            };
+            // Музыка
+            Button btnMusicControl = new Button()
+            {
+                Text = musicPlayer.IsPlaying ? "Выкл. музыку" : "Вкл. музыку",
+                BackColor = Color.FromArgb(80, 80, 80),
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold),
+                ForeColor = Color.White,
+                Size = new Size(150, 35),
+                Location = new Point(20, 220)
+            };
+
+            btnMusicControl.Click += (s, e) => {
+                if (musicPlayer.IsPlaying)
+                {
+                    musicPlayer.PauseMusic();
+                    btnMusicControl.Text = "Вкл музыку";
+                }
+                else
+                {
+                    musicPlayer.ResumeMusic();
+                    btnMusicControl.Text = "Выкл музыку";
+                }
             };
 
             Button okButton = new Button()
@@ -538,13 +533,14 @@ namespace VisualBook
                 Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold),
                 ForeColor = Color.White,
                 Size = new Size(80, 35),
-                Location = new Point(135, 220)
+                Location = new Point(290, 220)
             };
 
             okButton.Click += (s, e) => statsForm.Close();
 
             statsForm.Controls.Add(titleLabel);
             statsForm.Controls.Add(statsTextBox);
+            statsForm.Controls.Add(btnMusicControl);
             statsForm.Controls.Add(okButton);
             statsForm.ShowDialog();
         }
@@ -553,7 +549,6 @@ namespace VisualBook
         {
             AskToSaveAndExit();
         }
-
         // Сохранение
         private void AskToSaveAndExit()
         {
